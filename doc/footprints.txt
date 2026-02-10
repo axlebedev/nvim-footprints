@@ -1,0 +1,204 @@
+*footprints.txt*
+
+*footprints*     `:changes` visualisation on the fly
+
+===============================================================================
+CONTENTS                                                *footprints-contents*
+
+    Introduction ...................... |footprints-intro|
+    Usage ............................. |footprints-usage|
+    Configuration ..................... |footprints-configuration|
+    Commands .......................... |footprints-commands|
+    API ............................... |footprints-api|
+    Contributing ...................... |footprints-contributions|
+    Credits ........................... |footprints-credits|
+    License ........................... |footprints-license|
+
+===============================================================================
+INTRODUCTION                                               *footprints-intro*
+
+footprints highlights latest changes in current buffer.
+It helps to keep focus on lines you are working on
+
+===============================================================================
+USAGE                                                      *footprints-usage*
+
+Change any text, and that line will be highlighted.
+The older change - the dimmer highlight.
+
+===============================================================================
+CONFIGURATION                                      *footprints-configuration*
+
+g:footprintsColor                                         *g:footprintsColor*
+  Type: |String|
+  Default: `'#3A3A3A'` or `'#C1C1C1'`
+
+  Hex number. Color of the latest change highlight 
+  Default depends on `background` setting >
+
+  let g:footprintsColor = '#38403b'
+<
+
+
+g:footprintsTermColor                                 *g:footprintsTermColor*
+  Type: |String|
+  Default: `'208'`
+
+  Number. Color of the latest changes highlights
+  In terminal it is one color for all footprints,
+  |g:footprintsEasingFunction| is ignored. >
+
+  let g:footprintsTermColor = '186'
+<
+
+
+g:footprintsEasingFunction                       *g:footprintsEasingFunction*
+  Type: One of 'linear', 'easein', 'easeout', 'easeinout'
+  Default: `'linear'`
+
+  How does footprint color 'cooldown' to usual background color >
+
+  let g:footprintsEasingFunction = 'easeinout'
+<
+
+g:footprintsHistoryDepth                           *g:footprintsHistoryDepth*
+  Type: |Number|
+  Default: `20`
+
+  How many steps should be highlighted >
+
+  let g:footprintsHistoryDepth = 10
+<
+
+g:footprintsExcludeFiletypes                   *g:footprintsExcludeFiletypes*
+  Type: |List|
+  Default: `[]`
+
+  Which filetypes should not be processed by this plugin >
+
+  let g:footprintsExcludeFiletypes = '['magit', 'nerdtree', 'diff']'
+<
+
+g:footprintsEnabledByDefault                   *g:footprintsEnabledByDefault*
+  Type: |Boolean|
+  Default: `1`
+
+  Is this plugin enabled on vim start >
+
+  let g:footprintsEnabledByDefault = 1
+<
+
+g:footprintsOnCurrentLine                         *g:footprintsOnCurrentLine*
+  Type: |Boolean|
+  Default: `0`
+
+  Is current line highlighted by footprints >
+
+  let g:footprintsOnCurrentLine = 0
+<
+
+===============================================================================
+COMMANDS                                                *footprints-commands*
+
+FootprintsDisable                                         *FootprintsDisable*
+FootprintsEnable                                           *FootprintsEnable*
+FootprintsToggle                                           *FootprintsToggle*
+
+  Enable/disable Footprints globally
+
+FootprintsBufferDisable                             *FootprintsBufferDisable*
+FootprintsBufferEnable                               *FootprintsBufferEnable*
+FootprintsBufferToggle                               *FootprintsBufferToggle*
+
+  Enable/disable Footprints in current buffer
+
+FootprintsCurrentLineDisable                   *FootprintsCurrentLineDisable*
+FootprintsCurrentLineEnable                     *FootprintsCurrentLineEnable*
+FootprintsCurrentLineToggle                     *FootprintsCurrentLineToggle*
+
+  Enable/disable Footprint highlight for current line
+
+===============================================================================
+API                                                          *footprints-api*
+First, import these functions:  
+`import 'footprints.vim'`
+
+footprints.Footprints()                             *footprints.Footprints()*
+
+    Update footprints in current buffer >
+
+    footprints.Footprints()
+<
+
+footprints.OnBufEnter()                             *footprints.OnBufEnter()*
+
+    Update footprints on bufenter or 
+    any other case when current window contains some older highlights >
+
+    footprints.OnBufEnter()
+<
+
+footprints.OnCursorMove()                         *footprints.OnCursorMove()*
+
+    Update footprints when content was not changed,
+    only need update current line highlight >
+
+    footprints.OnCursorMove()
+<
+
+footprints.FootprintsDisable(forCurrentBuffer: bool = false)     *footprints.FootprintsDisable()*
+footprints.FootprintsEnable(forCurrentBuffer: bool = false)       *footprints.FootprintsEnable()*
+footprints.FootprintsToggle(forCurrentBuffer: bool = false)       *footprints.FootprintsToggle()*
+
+    Disable, enable or toggle footprints.
+>
+    footprints.FootprintsDisable(false)
+    footprints.FootprintsEnable(true)
+    footprints.FootprintsToggle(true)
+<
+
+footprints.FootprintsEnableCurrentLine()               *footprints.FootprintsEnableCurrentLine()*
+footprints.FootprintsDisableCurrentLine()             *footprints.FootprintsDisableCurrentLine()*
+footprints.FootprintsToggleCurrentLine()               *footprints.FootprintsToggleCurrentLine()*
+
+    Disable, enable or toggle footprint on current line. >
+
+    footprints.DisableCurrentLine()
+    footprints.EnableCurrentLine()
+    footprints.ToggleCurrentLine()
+<
+
+footprints.SetColor(color: string)                    *footprints.SetColor()*
+
+    Set footprints color.
+    "color" arg is string in hex format >
+
+    footprints.SetColor("#38403b")
+<
+
+footprints.SetTermColor(color: string)            *footprints.SetTermColor()*
+
+    Set footprints terminal color. >
+
+    footprints.SetTermColor("black")
+<
+
+footprints.SetHistoryDepth(depth: number)      *footprints.SetHistoryDepth()*
+    Set footprints history depth for current session. >
+
+    footprints.SetHistoryDepth(50)
+<
+
+===============================================================================
+CONTRIBUTIONS                                      *footprints-contributions*
+
+Contributions and pull requests are welcome.
+If you find a bug, or have an improvement suggestion -
+please place an issue at https://github.com/axlebedev/footprints
+
+===============================================================================
+LICENSE                                                  *footprints-license*
+
+MIT License.
+
+ vim:tw=79:ts=8:ft=help:norl:
