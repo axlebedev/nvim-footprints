@@ -79,3 +79,16 @@ vim.api.nvim_create_user_command(
     function() require("footprints").FootprintsToggleCurrentLine() end,
     { desc = "Toggle footprints for current line" }
 )
+
+return {
+  setup = function(opts)
+    -- Global defaults (matches Vim9script exactly)
+    vim.g.footprintsHistoryDepth = opts.footprintsHistoryDepth or 20
+    vim.g.footprintsExcludeFiletypes = opts.footprintsExcludeFiletypes or {"magit", "nerdtree", "diff"}
+    vim.g.footprintsEasingFunction = opts.footprintsEasingFunction or "easeinout"
+    vim.g.footprintsEnabledByDefault = opts.footprintsEnabledByDefault ~= false
+    vim.g.footprintsOnCurrentLine = opts.footprintsOnCurrentLine or false
+    vim.g.footprintsColor = opts.footprintsColor or (vim.o.background == "dark" and "#3A3A3A" or "#C1C1C1")
+    vim.g.footprintsTermColor = opts.footprintsTermColor or "208"
+  end
+}

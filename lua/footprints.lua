@@ -7,15 +7,6 @@ local M = {}
 local is_enabled = false
 local group_name = "FootprintsStep"
 
--- Global defaults (matches Vim9script exactly)
-vim.g.footprintsHistoryDepth = vim.g.footprintsHistoryDepth or 20
-vim.g.footprintsExcludeFiletypes = vim.g.footprintsExcludeFiletypes or {"magit", "nerdtree", "diff"}
-vim.g.footprintsEasingFunction = vim.g.footprintsEasingFunction or "easeinout"
-vim.g.footprintsEnabledByDefault = vim.g.footprintsEnabledByDefault ~= false
-vim.g.footprintsOnCurrentLine = vim.g.footprintsOnCurrentLine or false
-vim.g.footprintsColor = vim.g.footprintsColor or (vim.o.background == "dark" and "#3A3A3A" or "#C1C1C1")
-vim.g.footprintsTermColor = vim.g.footprintsTermColor or "208"
-
 local function get_is_enabled()
   return vim.b.isEnabled ~= nil and vim.b.isEnabled or is_enabled
 end
